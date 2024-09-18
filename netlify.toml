@@ -1,11 +1,11 @@
 [build]
-  command = "npm run build"
+  command = "npm run build" # Adjust this if your build command is different
+  publish = "public" # Adjust this to the directory where your static files are built
 
 [functions]
-  src = "server.js"
-  name = "my-express-app"
+  directory = "netlify/functions" # Directory where your serverless functions are located
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/server" # Adjust the function name if needed
   status = 200
