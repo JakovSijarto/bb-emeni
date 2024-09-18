@@ -1,7 +1,6 @@
-// Function to load menu data from API
 async function loadMenuData() {
     try {
-        const response = await fetch('/api/menu');
+        const response = await fetch('/.netlify/functions/get-menu'); // Point to Netlify function
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -105,6 +104,7 @@ async function loadEditableMenu() {
     }
 }
 
+
 // Save changes from edit-menu.html
 async function saveChanges() {
     const items = [];
@@ -125,12 +125,12 @@ async function saveChanges() {
     const menuData = { items };
 
     try {
-        const response = await fetch('/api/menu', {
+        const response = await fetch('/.netlify/functions/post-menu', { // Point to Netlify function
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData)
+            body: JSON.stringify(menuData),
         });
 
         if (!response.ok) {
@@ -171,12 +171,12 @@ async function addNewItem() {
     menuData.items.push(newItem);
 
     try {
-        const response = await fetch('/api/menu', {
+        const response = await fetch('/.netlify/functions/post-menu', { // Point to Netlify function
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData)
+            body: JSON.stringify(menuData),
         });
 
         if (!response.ok) {
@@ -197,12 +197,12 @@ async function deleteItem(id) {
     menuData.items = menuData.items.filter(item => item.id !== id);
 
     try {
-        const response = await fetch('/api/menu', {
+        const response = await fetch('/.netlify/functions/post-menu', { // Point to Netlify function
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData)
+            body: JSON.stringify(menuData),
         });
 
         if (!response.ok) {
