@@ -1,0 +1,214 @@
+// Function to load menu data from menu.json file and save it to localStorage
+async function loadMenuData() {
+    try {
+        const response = await fetch('/api/menu');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const menuData = await response.json();
+        return menuData;
+    } catch (error) {
+        console.error('Error loading menu data:', error);
+    }
+}
+
+// Function to display menu items by section with categories
+async function showMenu(section) {
+    const menuData = await loadMenuData();
+    const filteredItems = menuData.items.filter(item => item.section === section);
+    const menuItemsDiv = document.getElementById('menu-items');
+
+    if (menuItemsDiv) {
+        menuItemsDiv.innerHTML = '';
+
+        // Group items by category
+        const categories = {};
+        filteredItems.forEach(item => {
+            const category = item.category || '';
+            if (!categories[category]) {
+                categories[category] = [];
+            }
+            categories[category].push(item);
+        });
+
+        for (const category in categories) {
+            if (category) { // Only show category title if it's not empty
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.className = 'text-xl font-bold mt-8 mb-4';
+                categoryTitle.textContent = category;
+                menuItemsDiv.appendChild(categoryTitle);
+            }
+
+            categories[category].forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item flex justify-between p-4 bg-white rounded-lg shadow-md mb-2';
+                itemDiv.innerHTML = `
+                    <span>${item.name}</span>
+                    <span>$${item.price.toFixed(2)}</span>
+                `;
+                menuItemsDiv.appendChild(itemDiv);
+            });
+        }
+    }
+}
+
+// Function to load editable items on edit-menu.html
+async function loadEditableMenu() {
+    const menuData = await loadMenuData();
+    const editMenu = document.getElementById('edit-menu');
+
+    if (editMenu) {
+        editMenu.innerHTML = '';
+
+        const sections = {};
+        menuData.items.forEach(item => {
+            if (!sections[item.section]) {
+                sections[item.section] = [];
+            }
+            sections[item.section].push(item);
+        });
+
+        for (const section in sections) {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'section mb-6';
+
+            const sectionTitle = document.createElement('h2');
+            sectionTitle.className = 'text-2xl font-bold mt-8 mb-4';
+            sectionTitle.textContent = section;
+            sectionDiv.appendChild(sectionTitle);
+
+            sections[section].forEach(item => {
+                const editItem = document.createElement('div');
+                editItem.className = 'edit-item flex items-center space-x-4 p-4 bg-white rounded-lg shadow-md mb-2';
+                editItem.innerHTML = `
+                    <input type="text" id="name-${item.id}" value="${item.name}" class="w-full border border-gray-300 p-2 rounded">
+                    <input type="number" id="price-${item.id}" value="${item.price}" step="0.01" class="w-24 border border-gray-300 p-2 rounded">
+                    <select id="section-${item.id}" class="w-32 border border-gray-300 p-2 rounded">
+                        <option value="Topli napitci / Hot drinks" ${item.section === 'Topli napitci / Hot drinks' ? 'selected' : ''}>Topli napitci / Hot drinks</option>
+                        <option value="Bezalkoholna pića / Non alcoholic drinks" ${item.section === 'Bezalkoholna pića / Non alcoholic drinks' ? 'selected' : ''}>Bezalkoholna pića / Non alcoholic drinks</option>
+                        <option value="Domaća alkoholna pića / Domestic alcoholic drinks" ${item.section === 'Domaća alkoholna pića / Domestic alcoholic drinks' ? 'selected' : ''}>Domaća alkoholna pića / Domestic alcoholic drinks</option>
+                        <option value="Pivo" ${item.section === 'Pivo' ? 'selected' : ''}>Pivo</option>
+                        <option value="Specijalno" ${item.section === 'Specijalno' ? 'selected' : ''}>Specijalno</option>
+                        <option value="Strana alkoholna pića / Foreign alcoholic drinks" ${item.section === 'Strana alkoholna pića / Foreign alcoholic drinks' ? 'selected' : ''}>Strana alkoholna pića / Foreign alcoholic drinks</option>
+                        <option value="Vino / Wine" ${item.section === 'Vino / Wine' ? 'selected' : ''}>Vino / Wine</option>
+                    </select>
+                    <input type="text" id="category-${item.id}" value="${item.category || ''}" placeholder="Category" class="w-full border border-gray-300 p-2 rounded">
+                    <button onclick="deleteItem('${item.id}')" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                `;
+                sectionDiv.appendChild(editItem);
+            });
+
+            editMenu.appendChild(sectionDiv);
+        }
+    }
+}
+
+// Save changes from edit-menu.html
+async function saveChanges() {
+    const items = [];
+    const editItems = document.querySelectorAll('.edit-item');
+
+    editItems.forEach(editItem => {
+        const id = editItem.querySelector('input[type="text"]').id.split('-')[1];
+        const name = document.getElementById(`name-${id}`).value;
+        const price = parseFloat(document.getElementById(`price-${id}`).value);
+        const section = document.getElementById(`section-${id}`).value;
+        const category = document.getElementById(`category-${id}`).value;
+
+        if (name && !isNaN(price)) {
+            items.push({ id, name, price, section, category });
+        }
+    });
+
+    const menuData = { items };
+
+    try {
+        const response = await fetch('/api/menu', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(menuData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to save menu data');
+        }
+
+        alert('Menu updated successfully!');
+        loadEditableMenu(); // Refresh the editable menu to reflect changes
+    } catch (error) {
+        console.error('Error saving menu data:', error);
+    }
+}
+
+// Function to delete an item
+async function deleteItem(id) {
+    const menuData = await loadMenuData();
+    menuData.items = menuData.items.filter(item => item.id !== id);
+
+    try {
+        const response = await fetch('/api/menu', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(menuData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete item');
+        }
+
+        loadEditableMenu();
+    } catch (error) {
+        console.error('Error deleting item:', error);
+    }
+}
+
+// Function to add a new item
+async function addNewItem() {
+    const name = document.getElementById('new-item-name').value;
+    const price = parseFloat(document.getElementById('new-item-price').value);
+    const section = document.getElementById('new-item-section').value;
+    const category = document.getElementById('new-item-category').value;
+
+    if (name && !isNaN(price) && section) {
+        const menuData = await loadMenuData();
+        const newItem = {
+            id: Date.now().toString(),
+            name,
+            price,
+            section,
+            category
+        };
+
+        menuData.items.push(newItem);
+
+        try {
+            const response = await fetch('/api/menu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(menuData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add new item');
+            }
+
+            loadEditableMenu(); // Refresh the editable menu to show the new item
+
+            // Clear input fields
+            document.getElementById('new-item-name').value = '';
+            document.getElementById('new-item-price').value = '';
+            document.getElementById('new-item-section').value = 'Topli napitci / Hot drinks';
+            document.getElementById('new-item-category').value = '';
+        } catch (error) {
+            console.error('Error adding new item:', error);
+        }
+    } else {
+        alert('Please fill in all fields correctly.');
+    }
+}

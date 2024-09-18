@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Edit Menu</h1>
+        
+        <!-- Editable Menu Items -->
+        <div id="edit-menu" class="space-y-4"></div>
+
+        <!-- Add New Item -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-4">Add New Item</h2>
+            <div class="flex space-x-4 p-4 bg-white rounded-lg shadow-md mb-2">
+                <input type="text" id="new-item-name" placeholder="Item Name" class="w-full border border-gray-300 p-2 rounded">
+                <input type="number" id="new-item-price" placeholder="Price" step="0.01" class="w-24 border border-gray-300 p-2 rounded">
+                <select id="new-item-section" class="w-32 border border-gray-300 p-2 rounded">
+                    <option value="Topli napitci / Hot drinks">Topli napitci / Hot drinks</option>
+                    <option value="Bezalkoholna pića / Non alcoholic drinks">Bezalkoholna pića / Non alcoholic drinks</option>
+                    <option value="Domaća alkoholna pića / Domestic alcoholic drinks">Domaća alkoholna pića / Domestic alcoholic drinks</option>
+                    <option value="Pivo">Pivo</option>
+                    <option value="Specijalno">Specijalno</option>
+                    <option value="Strana alkoholna pića / Foreign alcoholic drinks">Strana alkoholna pića / Foreign alcoholic drinks</option>
+                    <option value="Vino / Wine">Vino / Wine</option> 
+                </select>
+                <input type="text" id="new-item-category" placeholder="Category" class="w-full border border-gray-300 p-2 rounded">
+                <button onclick="addNewItem()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add</button>
+            </div>
+        </div>
+
+        <!-- Save Changes Button -->
+        <button onclick="saveChanges()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-4">Save Changes</button>
+        <a href="index.html" class="block mt-6 text-center text-blue-500 hover:underline">Back to Main Menu</a>
+    </div>
+    <script src="menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEditableMenu(); // Load editable menu items on page load
+        });
+    </script>
+</body>
+</html>

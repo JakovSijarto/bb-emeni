@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bor Bar E-meni</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Bezalkoholna pića / Non alcoholic drinks</h1>
+        
+        <!-- Coffee Items Display -->
+        <div id="menu-items" class="space-y-4"></div>
+        
+        <!-- Back to Main Menu Link -->
+        <a href="index.html" class="block mt-6 text-center text-blue-500 hover:underline">Back to Main Menu</a>
+    </div>
+    <script src="menu.js"></script>
+    <script>
+        // Ensure JavaScript executes after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            showMenu('Bezalkoholna pića / Non alcoholic drinks'); // Load Coffee menu items on page load
+        });
+    </script>
+</body>
+</html>
