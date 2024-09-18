@@ -1,58 +1,17 @@
-// Function to load menu data from menu.json file and save it to localStorage
+// Function to load menu data from API
 async function loadMenuData() {
     try {
         const response = await fetch('/api/menu');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const menuData = await response.json();
-        return menuData;
+        return response.json();
     } catch (error) {
         console.error('Error loading menu data:', error);
     }
 }
 
-// Function to display menu items by section with categories
-async function showMenu(section) {
-    const menuData = await loadMenuData();
-    const filteredItems = menuData.items.filter(item => item.section === section);
-    const menuItemsDiv = document.getElementById('menu-items');
-
-    if (menuItemsDiv) {
-        menuItemsDiv.innerHTML = '';
-
-        // Group items by category
-        const categories = {};
-        filteredItems.forEach(item => {
-            const category = item.category || '';
-            if (!categories[category]) {
-                categories[category] = [];
-            }
-            categories[category].push(item);
-        });
-
-        for (const category in categories) {
-            if (category) { // Only show category title if it's not empty
-                const categoryTitle = document.createElement('h2');
-                categoryTitle.className = 'text-xl font-bold mt-8 mb-4';
-                categoryTitle.textContent = category;
-                menuItemsDiv.appendChild(categoryTitle);
-            }
-
-            categories[category].forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item flex justify-between p-4 bg-white rounded-lg shadow-md mb-2';
-                itemDiv.innerHTML = `
-                    <span>${item.name}</span>
-                    <span>$${item.price.toFixed(2)}</span>
-                `;
-                menuItemsDiv.appendChild(itemDiv);
-            });
-        }
-    }
-}
-
-// Function to load editable items on edit-menu.html
+// Function to display editable menu items
 async function loadEditableMenu() {
     const menuData = await loadMenuData();
     const editMenu = document.getElementById('edit-menu');
