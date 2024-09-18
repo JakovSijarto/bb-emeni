@@ -1,14 +1,11 @@
 [build]
-  command = "echo Building functions"  # Placeholder command
+  command = "npm run build"
 
 [functions]
-  # Replace with the actual filename of your Express app (e.g., index.js)
   src = "server.js"
-  # Optional: Set a more descriptive function name for Netlify
   name = "my-express-app"
 
 [[redirects]]
-  # Redirect all routes to the function for server-side rendering
   from = "/*"
   to = "/.netlify/functions/:splat"
   status = 200
