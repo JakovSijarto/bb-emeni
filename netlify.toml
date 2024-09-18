@@ -1,11 +1,11 @@
 [build]
-  command = "npm run build" # Adjust this if your build command is different
-  publish = "public" # Adjust this to the directory where your static files are built
+  command = "echo 'No build command necessary'"
+  publish = "public"
 
 [functions]
-  directory = "netlify/functions" # Directory where your serverless functions are located
+  directory = "netlify/functions"
 
 [[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/server" # Adjust the function name if needed
+  from = "/api/*"
+  to = "/.netlify/functions/server"
   status = 200
