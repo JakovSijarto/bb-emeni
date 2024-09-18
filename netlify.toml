@@ -1,7 +1,11 @@
 [build]
-  functions = "functions"
+  command = "echo 'No build command necessary'"
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/server"
   status = 200
