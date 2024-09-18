@@ -6,6 +6,13 @@
       "price": 213123,
       "section": "Bezalkoholna pića / Non alcoholic drinks",
       "category": "123"
+    },
+    {
+      "id": "1726676561236",
+      "name": "2232",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "22"
     }
   ]
 }

@@ -1,6 +1,6 @@
 async function loadMenuData() {
     try {
-        const response = await fetch('/.netlify/functions/get-menu'); // Point to Netlify function
+        const response = await fetch('/api/menu'); // Updated to match your server endpoint
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -12,7 +12,6 @@ async function loadMenuData() {
     }
 }
 
-// Function to display menu items by section with categories
 async function showMenu(section) {
     const menuData = await loadMenuData();
     const filteredItems = menuData.items.filter(item => item.section === section);
@@ -21,7 +20,6 @@ async function showMenu(section) {
     if (menuItemsDiv) {
         menuItemsDiv.innerHTML = '';
 
-        // Group items by category
         const categories = {};
         filteredItems.forEach(item => {
             const category = item.category || '';
@@ -52,7 +50,6 @@ async function showMenu(section) {
     }
 }
 
-// Function to load editable items on edit-menu.html
 async function loadEditableMenu() {
     const menuData = await loadMenuData();
     const editMenu = document.getElementById('edit-menu');
@@ -84,7 +81,6 @@ async function loadEditableMenu() {
                     <input type="text" id="name-${item.id}" value="${item.name}" class="w-full border border-gray-300 p-2 rounded">
                     <input type="number" id="price-${item.id}" value="${item.price}" step="0.01" class="w-24 border border-gray-300 p-2 rounded">
                     <select id="section-${item.id}" class="w-32 border border-gray-300 p-2 rounded">
-                        <!-- Add other options as needed -->
                         <option value="Topli napitci / Hot drinks" ${item.section === 'Topli napitci / Hot drinks' ? 'selected' : ''}>Topli napitci / Hot drinks</option>
                         <option value="Bezalkoholna pića / Non alcoholic drinks" ${item.section === 'Bezalkoholna pića / Non alcoholic drinks' ? 'selected' : ''}>Bezalkoholna pića / Non alcoholic drinks</option>
                         <option value="Domaća alkoholna pića / Domestic alcoholic drinks" ${item.section === 'Domaća alkoholna pića / Domestic alcoholic drinks' ? 'selected' : ''}>Domaća alkoholna pića / Domestic alcoholic drinks</option>
@@ -104,8 +100,6 @@ async function loadEditableMenu() {
     }
 }
 
-
-// Save changes from edit-menu.html
 async function saveChanges() {
     const items = [];
     const editItems = document.querySelectorAll('.edit-item');
@@ -125,7 +119,7 @@ async function saveChanges() {
     const menuData = { items };
 
     try {
-        const response = await fetch('/.netlify/functions/post-menu', { // Point to Netlify function
+        const response = await fetch('/api/menu', { // Updated to match your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -144,7 +138,6 @@ async function saveChanges() {
     }
 }
 
-// Add new item
 async function addNewItem() {
     const name = document.getElementById('new-item-name').value;
     const price = parseFloat(document.getElementById('new-item-price').value);
@@ -156,22 +149,14 @@ async function addNewItem() {
         return;
     }
 
-    // Generate a new ID (In practice, use a more reliable method for IDs)
     const id = Date.now().toString();
-    
-    const newItem = {
-        id,
-        name,
-        price,
-        section,
-        category
-    };
+    const newItem = { id, name, price, section, category };
 
     const menuData = await loadMenuData();
     menuData.items.push(newItem);
 
     try {
-        const response = await fetch('/.netlify/functions/post-menu', { // Point to Netlify function
+        const response = await fetch('/api/menu', { // Updated to match your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -191,13 +176,12 @@ async function addNewItem() {
     }
 }
 
-// Delete an item
 async function deleteItem(id) {
     const menuData = await loadMenuData();
     menuData.items = menuData.items.filter(item => item.id !== id);
 
     try {
-        const response = await fetch('/.netlify/functions/post-menu', { // Point to Netlify function
+        const response = await fetch('/api/menu', { // Updated to match your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
