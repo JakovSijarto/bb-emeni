@@ -153,7 +153,7 @@ async function addNewItem() {
     const newItem = { id, name, price, section, category };
 
     try {
-        const response = await fetch('../../.netlify/functions/update-menu.js', {
+        const response = await fetch('/.netlify/functions/update-menu.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
