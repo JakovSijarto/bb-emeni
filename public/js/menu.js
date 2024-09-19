@@ -119,7 +119,7 @@ async function saveChanges() {
     const menuData = { items };
 
     try {
-        const response = await fetch('/menu.json', { // Updated to match your server endpoint
+        const response = await fetch('/.netlify/functions/update-menu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,6 +138,7 @@ async function saveChanges() {
     }
 }
 
+
 async function addNewItem() {
     const name = document.getElementById('new-item-name').value;
     const price = parseFloat(document.getElementById('new-item-price').value);
@@ -152,13 +153,16 @@ async function addNewItem() {
     const id = Date.now().toString();
     const newItem = { id, name, price, section, category };
 
+    const menuData = await loadMenuData();
+    menuData.items.push(newItem);
+
     try {
-        const response = await fetch('/.netlify/functions/update-menu.js', {
+        const response = await fetch('/.netlify/functions/update-menu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newItem),
+            body: JSON.stringify(menuData),
         });
 
         if (!response.ok) {
@@ -173,12 +177,13 @@ async function addNewItem() {
     }
 }
 
+
 async function deleteItem(id) {
     const menuData = await loadMenuData();
     menuData.items = menuData.items.filter(item => item.id !== id);
 
     try {
-        const response = await fetch('/menu.json', { // Updated to match your server endpoint
+        const response = await fetch('/.netlify/functions/update-menu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,3 +202,4 @@ async function deleteItem(id) {
         alert('Failed to delete item.');
     }
 }
+

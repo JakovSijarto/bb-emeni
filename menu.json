@@ -1,18 +1,60 @@
 {
   "items": [
     {
-      "id": "1",
-      "name": "Latte",
-      "price": 4.5,
-      "section": "Topli napitci / Hot drinks",
-      "category": "Coffee"
+      "id": "1726673331693",
+      "name": "21323",
+      "price": 213123,
+      "section": "Bezalkoholna pića / Non alcoholic drinks",
+      "category": "123"
     },
     {
-      "id": "2",
-      "name": "IPA",
-      "price": 6.0,
+      "id": "1726676561236",
+      "name": "2232",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "22"
+    },
+    {
+      "id": "1726740564005",
+      "name": "232",
+      "price": 22,
+      "section": "Bezalkoholna pića / Non alcoholic drinks",
+      "category": "22"
+    },
+    {
+      "id": "1726740587757",
+      "name": "jakov",
+      "price": 20,
       "section": "Pivo",
-      "category": "Beer"
+      "category": "Pivo"
+    },
+    {
+      "id": "1726741223964",
+      "name": "ww",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": ""
+    },
+    {
+      "id": "1726741766964",
+      "name": "ww",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "w"
+    },
+    {
+      "id": "1726741781492",
+      "name": "ww",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "w"
+    },
+    {
+      "id": "1726743074124",
+      "name": "222",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": ""
     }
   ]
 }
