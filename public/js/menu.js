@@ -124,7 +124,10 @@ async function saveChanges() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData),
+            body: JSON.stringify({
+                action: 'update',
+                items: menuData.items, // Sending all items for bulk update
+            }),
         });
 
         if (!response.ok) {
@@ -137,6 +140,7 @@ async function saveChanges() {
         alert('Failed to save changes.');
     }
 }
+
 
 
 async function addNewItem() {
@@ -162,7 +166,10 @@ async function addNewItem() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData),
+            body: JSON.stringify({
+                action: 'add',
+                item: newItem, // Sending the new item to be added
+            }),
         });
 
         if (!response.ok) {
@@ -188,8 +195,12 @@ async function deleteItem(id) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData),
+            body: JSON.stringify({
+                action: 'delete',
+                item: { id }, // Sending the item id to be deleted
+            }),
         });
+        
 
         if (!response.ok) {
             throw new Error('Failed to delete item');

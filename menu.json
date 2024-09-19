@@ -8,13 +8,6 @@
       "category": "123"
     },
     {
-      "id": "1726676561236",
-      "name": "2232",
-      "price": 22,
-      "section": "Topli napitci / Hot drinks",
-      "category": "22"
-    },
-    {
       "id": "1726740564005",
       "name": "232",
       "price": 22,
@@ -50,11 +43,18 @@
       "category": "w"
     },
     {
-      "id": "1726743074124",
-      "name": "222",
+      "id": "1726743584492",
+      "name": "22",
       "price": 22,
       "section": "Topli napitci / Hot drinks",
       "category": ""
+    },
+    {
+      "id": "1726743804772",
+      "name": "333",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "2"
     }
   ]
 }
