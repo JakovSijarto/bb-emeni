@@ -4,7 +4,8 @@
   "description": "E-menu application with Express and Netlify serverless functions",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build":"run build"
   },
   "keywords": [],
   "author": "",
