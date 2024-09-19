@@ -1,6 +1,6 @@
 async function loadMenuData() {
     try {
-        const response = await fetch('https://bor-bar.netlify.app/app/menu'); // Updated to match your server endpoint
+        const response = await fetch('/menu.json'); // Updated to match your server endpoint
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -119,7 +119,7 @@ async function saveChanges() {
     const menuData = { items };
 
     try {
-        const response = await fetch('https://bor-bar.netlify.app/app/menu', { // Updated to match your server endpoint
+        const response = await fetch('/menu.json', { // Updated to match your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ async function addNewItem() {
     menuData.items.push(newItem);
 
     try {
-        const response = await fetch('https://bor-bar.netlify.app/app/menu', { // Updated to match your server endpoint
+        const response = await fetch('/menu.json', { // Updated to match your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -181,7 +181,7 @@ async function deleteItem(id) {
     menuData.items = menuData.items.filter(item => item.id !== id);
 
     try {
-        const response = await fetch('https://bor-bar.netlify.app/app/menu', { // Updated to match your server endpoint
+        const response = await fetch('/menu.json', { // Updated to match your server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
