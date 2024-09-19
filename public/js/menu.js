@@ -152,16 +152,13 @@ async function addNewItem() {
     const id = Date.now().toString();
     const newItem = { id, name, price, section, category };
 
-    const menuData = await loadMenuData();
-    menuData.items.push(newItem);
-
     try {
-        const response = await fetch('/menu.json', { // Updated to match your server endpoint
+        const response = await fetch('/.netlify/functions/update-menu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(menuData),
+            body: JSON.stringify(newItem),
         });
 
         if (!response.ok) {

@@ -13,6 +13,20 @@
       "price": 22,
       "section": "Topli napitci / Hot drinks",
       "category": "22"
+    },
+    {
+      "id": "1726740564005",
+      "name": "232",
+      "price": 22,
+      "section": "Bezalkoholna pića / Non alcoholic drinks",
+      "category": "22"
+    },
+    {
+      "id": "1726740587757",
+      "name": "jakov",
+      "price": 20,
+      "section": "Pivo",
+      "category": "Pivo"
     }
   ]
 }
