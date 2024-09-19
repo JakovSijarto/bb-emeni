@@ -27,6 +27,27 @@
       "price": 20,
       "section": "Pivo",
       "category": "Pivo"
+    },
+    {
+      "id": "1726741223964",
+      "name": "ww",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": ""
+    },
+    {
+      "id": "1726741766964",
+      "name": "ww",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "w"
+    },
+    {
+      "id": "1726741781492",
+      "name": "ww",
+      "price": 22,
+      "section": "Topli napitci / Hot drinks",
+      "category": "w"
     }
   ]
 }
